@@ -8,7 +8,7 @@
             <div class="col s12 m4 14">
                 <div class="card-panel">
                     <h6 class="bold">Total:</h6>
-                    <h1 class="bold">10,000$</h1>
+                    <h1 class="bold">RD $ {{ proyecto.presupuesto }}</h1>
                 </div>
             </div>
 
@@ -37,17 +37,18 @@
         </div>
 
         <ul class="z-depth-1">
+            {% for presupuesto in lista_presupuesto %}
             <li>
                 <div class="card-panel z-depth-0 expense">
                     <div class="row">
                         <div class="col 16 m4">
-                            <span class="title">Combustible</span>
+                            <span class="title">{{ presupuesto.titulo }}</span>
                         </div>
                         <div class="col 13 m4">
-                            <span class="title">250$</span>
+                            <span class="title">{{presupuesto.monto}}</span>
                         </div>
                         <div class="col 1">
-                            <span class="title bold">Reparacion</span>
+                            <span class="title bold">{{presupuesto.categoria}}</span>
                         </div>
                         <a href="">
                             <i class="material-icons red-text right">close</i>
@@ -55,63 +56,7 @@
                     </div>
                 </div>
             </li>
-
-            <li>
-                <div class="card-panel z-depth-0 expense">
-                    <div class="row">
-                        <div class="col 16 m4">
-                            <span class="title">Combustible</span>
-                        </div>
-                        <div class="col 13 m4">
-                            <span class="title">250$</span>
-                        </div>
-                        <div class="col 1">
-                            <span class="title bold">Reparacion</span>
-                        </div>
-                        <a href="">
-                            <i class="material-icons red-text right">close</i>
-                        </a>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="card-panel z-depth-0 expense">
-                    <div class="row">
-                        <div class="col 16 m4">
-                            <span class="title">Combustible</span>
-                        </div>
-                        <div class="col 13 m4">
-                            <span class="title">250$</span>
-                        </div>
-                        <div class="col 1">
-                            <span class="title bold">Reparacion</span>
-                        </div>
-                        <a href="">
-                            <i class="material-icons red-text right">close</i>
-                        </a>
-                    </div>
-                </div>
-            </li>
-
-            <li>
-                <div class="card-panel z-depth-0 expense">
-                    <div class="row">
-                        <div class="col 16 m4">
-                            <span class="title">Combustible</span>
-                        </div>
-                        <div class="col 13 m4">
-                            <span class="title">250$</span>
-                        </div>
-                        <div class="col 1">
-                            <span class="title bold">Reparacion</span>
-                        </div>
-                        <a href="">
-                            <i class="material-icons red-text right">close</i>
-                        </a>
-                    </div>
-                </div>
-            </li>
+            {% endfor %}
         </ul>
     </section>
 </div>

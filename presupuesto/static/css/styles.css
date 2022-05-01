@@ -25,6 +25,13 @@ html {
     margin-bottom: 50px;
 }
 
+form ul li.category {
+    display: inline-block;
+    background-color: white;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+
 .section-stats .card-panel{
     margin: 8px;
 }
@@ -60,3 +67,4 @@ html {
 .section-expenses li:nth-child(even) .expense{
     background-color: #F2F2F2;
 }
+
