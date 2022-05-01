@@ -7,22 +7,28 @@
         <div class="row">
             <div class="col s12 m4 14">
                 <div class="card-panel">
-                    <h6 class="bold">Total:</h6>
+                    <h6 class="bold">Total en Presupuesto:</h6>
                     <h1 class="bold">RD $ {{ proyecto.presupuesto }}</h1>
                 </div>
             </div>
 
             <div class="col s12 m4 14">
                 <div class="card-panel">
-                    <h6 class="bold">Total:</h6>
-                    <h1 class="bold">10,000$</h1>
+                    <h6 class="bold">Total Gastado:</h6>
+                    {% if proyecto.gastados > 0%}
+                    <h1 class="bold green-text">RD $ {{ proyecto.gastados }}</h1>
+                    {% elif proyecto.gastados == 0 %}
+                    <h1 class="bold orange-text">RD $ {{ proyecto.gastados }}</h1>
+                    {% else %}
+                    <h1 class="bold red-text">RD $ {{ proyecto.gastados }}</h1>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="col s12 m4 14">
                 <div class="card-panel">
-                    <h6 class="bold">Total:</h6>
-                    <h1 class="bold">10,000$</h1>
+                    <h6 class="bold">Total de Transacciones:</h6>
+                    <h1 class="bold">{{ proyecto.transacciones }}</h1>
                 </div>
             </div>
         </div>

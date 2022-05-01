@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import models
 from django.utils.text import slugify
 
@@ -13,6 +12,19 @@ class Proyecto(models.Model):
     def guardar(self, *args, **kwargs):
         self.slug = slugify(self.nombre)
         super(Proyecto, self).save(*args, **kwargs)
+
+    def gastados(self):
+        listado_presupuesto= Presupuesto_Proyecto.objects.filter(proyecto=self)
+        total_presupuesto_monto = 0
+        for presupuestado in listado_presupuesto:
+            total_presupuesto_monto += presupuestado.monto
+
+        return self.presupuesto - total_presupuesto_monto
+
+    def transacciones(self):
+        listado_presupuesto= Presupuesto_Proyecto.objects.filter(proyecto=self)
+        return len(listado_presupuesto)
+        
         
 class Categoria(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
@@ -29,3 +41,6 @@ class Presupuesto_Proyecto(models.Model):
     
     def __str__(self):
         return self.titulo
+    
+    class Meta:
+        ordering = ('-monto',)

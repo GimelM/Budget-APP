@@ -1,15 +1,32 @@
 {% extends 'presupuesto/base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="container">
-    <div class="noproject-wrapper center">
-        <h3 class="grey-text">No hay proyectos registrados.</h3>
-        <a href="" class="btn-large grey">
-            <i class="material-icons white-text left">add_circle</i>
-            <span class="bold">Nuevo Proyecto</span>
+
+    <h1>My Projects</h1>
+    <hr>
+  
+    <div class="row">
+      {% for proyecto in listar_proyecto %}
+      <div class="col s12 md6 xl3">
+        <div class="card-panel">
+          <h5>{{ proyecto.nombre }}</h5>
+          <a href="{% url 'detalle' proyecto.slug %}" class="btn">Visit</a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="noproject-wrapper center">
+        <h3 class="grey-text">No existen proyectos registrados.</h3>
+        <a href="{% url 'crear' %}" class="btn-large grey">
+          <i class="material-icons white-text left">add_circle</i>
+          <span class="bold">Add Projects</span>
         </a>
+      </div>
+      {% endfor %}
     </div>
-</div>
+  
+  
+  </div>
 
 {% endblock content %}

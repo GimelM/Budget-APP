@@ -1,6 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
-
 from presupuesto.forms import ExpenseForm
 from .models import Presupuesto_Proyecto, Proyecto, Categoria
 from django.views.generic import CreateView
@@ -9,9 +8,9 @@ from .forms import ExpenseForm
 import json
 
 def listar_proyecto(request):
-    lista_proyecto = Proyecto.objects.all()
+    listar_proyecto = Proyecto.objects.all()
     context = {
-        'lista_proyecto': lista_proyecto
+        'listar_proyecto': listar_proyecto
     }
     return render(request, 'presupuesto/listar-proyecto.html', context)
 
@@ -21,11 +20,13 @@ def detalle_proyecto(request, proyecto_slug):
     if request.method == 'GET':
         lista_categoria = Categoria.objects.filter(proyecto=proyecto)
         lista_presupuesto = proyecto.presupuestos.all()
+        
         context = {
             'proyecto': proyecto,
             'lista_presupuesto': lista_presupuesto,
-            'lista_categoria': lista_categoria
+            'lista_categoria': lista_categoria,
             }
+        
         return render(request, 'presupuesto/detalle-proyecto.html', context)
     
     elif request.method == 'POST':
