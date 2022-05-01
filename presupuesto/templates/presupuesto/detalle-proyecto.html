@@ -1,5 +1,5 @@
 {% extends 'presupuesto/base.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="container">
@@ -30,7 +30,7 @@
 
     <section class="section section-expenses">
         <div class="row">
-            <button class="btn waves-effect right">
+            <button class="btn waves-effect right modal-trigger" href="#expenseModal">
                 <i class="material-icons white-text left">add_circle</i>
                 Agregar Gasto
             </button>
@@ -50,7 +50,7 @@
                         <div class="col 1">
                             <span class="title bold">{{presupuesto.categoria}}</span>
                         </div>
-                        <a href="">
+                        <a onclick="deleteExpense(this)" data-id="{{ presupuesto.id }}">
                             <i class="material-icons red-text right">close</i>
                         </a>
                     </div>
@@ -60,5 +60,54 @@
         </ul>
     </section>
 </div>
+
+<div id="expenseModal" class="modal">
+    <div class="modal-content">
+        <h4>Agregar Presupuesto</h4>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="titulo">Titulo</label>
+            <input name="titulo" id="titulo">
+
+            <label for="monto">Monto</label>
+            <input name="monto" id="monto">
+
+            <select name="categoria">
+                {% for categoria in lista_categoria %}
+                <option>{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn">Agregar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var elem = document.querySelector('.modal')
+    var instance = M.Modal.init(elem)
+
+    var elem = document.querySelector('select')
+    var instance = M.FormSelect.init(elem)
+
+    function deleteExpense(e){
+
+        let id = e.dataset.id
+        e.closest('li').remove()
+      
+        fetch('', {
+          method: 'DELETE',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: JSON.stringify({
+            'id': id
+          }),
+          credentials: 'same-origin',
+        })
+      }
+</script>
 
 {% endblock content %}

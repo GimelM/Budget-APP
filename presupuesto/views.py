@@ -1,20 +1,57 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
-from .models import Proyecto, Categoria
+
+from presupuesto.forms import ExpenseForm
+from .models import Presupuesto_Proyecto, Proyecto, Categoria
 from django.views.generic import CreateView
 from django.utils.text import slugify
+from .forms import ExpenseForm
+import json
 
 def listar_proyecto(request):
-    return render(request, 'presupuesto/listar-proyecto.html')
+    lista_proyecto = Proyecto.objects.all()
+    context = {
+        'lista_proyecto': lista_proyecto
+    }
+    return render(request, 'presupuesto/listar-proyecto.html', context)
 
 def detalle_proyecto(request, proyecto_slug):
     proyecto = get_object_or_404(Proyecto, slug=proyecto_slug)
-    lista_presupuesto = proyecto.presupuestos.all()
-    context = {
-        'proyecto': proyecto,
-        'lista_presupuesto': lista_presupuesto
-    }
-    return render(request, 'presupuesto/detalle-proyecto.html', context)
+    
+    if request.method == 'GET':
+        lista_categoria = Categoria.objects.filter(proyecto=proyecto)
+        lista_presupuesto = proyecto.presupuestos.all()
+        context = {
+            'proyecto': proyecto,
+            'lista_presupuesto': lista_presupuesto,
+            'lista_categoria': lista_categoria
+            }
+        return render(request, 'presupuesto/detalle-proyecto.html', context)
+    
+    elif request.method == 'POST':
+        form = ExpenseForm(request.POST)
+        if form.is_valid():
+            titulo = form.cleaned_data['titulo']
+            monto = form.cleaned_data['monto']
+            categoria_nombre = form.cleaned_data['categoria']
+            
+            categoria = get_object_or_404(Categoria, proyecto=proyecto, nombre=categoria_nombre)
+            
+            Presupuesto_Proyecto.objects.create(
+                proyecto=proyecto,
+                titulo=titulo,
+                monto=monto,
+                categoria = categoria
+            ).save()
+            
+    elif request.method == 'DELETE':
+        id = json.loads(request.body)['id']
+        expense = Presupuesto_Proyecto.objects.get(id=id)
+        expense.delete()
+
+        return HttpResponse('')
+            
+    return HttpResponseRedirect(proyecto_slug)
 
 class CrearProyecto(CreateView):
     model = Proyecto
