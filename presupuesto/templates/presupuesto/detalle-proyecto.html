@@ -15,7 +15,7 @@
             <div class="col s12 m4 14">
                 <div class="card-panel">
                     <h6 class="bold">Total Gastado:</h6>
-                    {% if proyecto.gastados > 0%}
+                    {% if proyecto.gastados > 0 %}
                     <h1 class="bold green-text">RD $ {{ proyecto.gastados }}</h1>
                     {% elif proyecto.gastados == 0 %}
                     <h1 class="bold orange-text">RD $ {{ proyecto.gastados }}</h1>
@@ -51,7 +51,7 @@
                             <span class="title">{{ presupuesto.titulo }}</span>
                         </div>
                         <div class="col 13 m4">
-                            <span class="title">{{presupuesto.monto}}</span>
+                            <span class="title">{{presupuesto.monto }}</span>
                         </div>
                         <div class="col 1">
                             <span class="title bold">{{presupuesto.categoria}}</span>
